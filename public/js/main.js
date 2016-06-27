@@ -27,15 +27,19 @@ $("#timelineButton").click(function(){
   function assignColor(){
     return colors.splice(0,1)[0];
   }
-  function addParticipants(newName){
-    $("#participants").append("<div class='participant' id='"+newName+"'></div>");
-    
-    $("#"+newName).css("color",assignColor());
-    $("#"+newName).append("<div class='inUseDevice'</div>");
-    
-   
-    $("#"+newName).append("<p>"+newName+"</p>");
 
+  function addParticipants(name) {
+	var participant = $('<div class="participant">');
+	var inUseDevice = $('<div class="inUseDevice">');
+
+	participant.css('color', assignColor());
+
+	participant.append(inUseDevice);
+	participant.append($('<p>').text(name));
+
+	$('#participants').append(participant);
+
+	return inUseDevice;
   }
   
 
@@ -46,20 +50,21 @@ $("#timelineButton").click(function(){
 navigator.getUserMedia = navigator.getUserMedia ||
                          navigator.webkitGetUserMedia ||
                          navigator.mozGetUserMedia;
-function webCam(newName){
+function webCam(inUseDevice) {
+  var w = inUseDevice.width();
+  
   navigator.getUserMedia(
-    { audio: false, video: true },
+    { video: true },
     function(mediaStream) {
-      $("#"+newName+" .inUseDevice").append("<video class='cam' id='"+newName+"cam'></video>");
-      var video = document.querySelector("#"+newName+"cam");
-      video.src = window.URL.createObjectURL(mediaStream);
-      video.onloadedmetadata = function(e) {
-        video.play();
-      };
+        $('<video>')
+            .appendTo(inUseDevice)
+            .prop('src', window.URL.createObjectURL(mediaStream))
+            .on('loadedmetadata', function(e) {
+                this.play();
+            });
     },
-    function(err) { console.log(err.name); }
+    function(err) { console.log(err); }
   );
-
 }
 ///*------------- WEBRTC NOT ENABLED YET---------------*/
 //var webrtc = new SimpleWebRTC({
@@ -85,9 +90,11 @@ app.init = function() {
         //create a name input using prompt
         //first is the prompt, second arg is the in the input
         name = prompt('What is your name?', 'type your name here');
-        addParticipants(name);
+//        addParticipants(name);
+//      
+//        webCam(name);
+        webCam(addParticipants(name));
       
-        webCam(name);
         //init socket with server
         //meaning connect to the server
         //don't need to put anything in io.connect() bc
@@ -197,7 +204,9 @@ app.init = function() {
       /*----------------KEEP TRACK OF STATES----------------*/
         console.log("state#: "+res.data.state);
           if(res.data.state==1){
+            //BUTTON FOR CONTACTS POPUP
             contactsPopup();
+            
             nameRoom(res.data.msg)
           } else if(res.data.state==2){
             //date of meeting
@@ -239,8 +248,11 @@ start();
 app.init();
 
 /*----------------CONTACTS WINDOW POPUP----------------*/
+var contacts = [];
+
 function contactsPopup(){
-   $("#contactsPopup").css("width","60%");
+  contacts = [];
+  $("#contactsPopup").css("width","60%");
   var contactHeight = ($("#contactsPopup").height())-($(".server-msg").outerHeight());
   $("#contacts").css("height", contactHeight);
     
@@ -252,9 +264,17 @@ $(".contacts").mouseover(function(){
 $(".contacts").mouseout(function(){
   $(this).children(".add").css("width","0")  
 });
+  
+
 $(".add").click(function(){
-  var contact = $(this).prev().text();
-  $(this).css("width","0");
+  contacts.push($(this).prev().text());
   $(this).children().text("\u2713");
-  addParticipants(contact);  
 });
+
+$("#contactsPopup .closeButton").click(function(){
+
+  //send contacts[] to AI
+  for(i=0; i<contacts.length;i++){
+    addParticipants(contacts[i])
+  }
+})
