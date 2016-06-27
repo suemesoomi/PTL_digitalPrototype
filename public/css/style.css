@@ -22,7 +22,12 @@
   .inUseDevice{
     width:20vh;
     height:20vh;
-    background-color:blue;
+    position:relative;
+  }
+  .inUseDevice video{
+    position:absolute;
+    bottom:0;
+    left:0;
   }
   #timelineButton{
     position: absolute;

@@ -52,12 +52,12 @@ navigator.getUserMedia = navigator.getUserMedia ||
                          navigator.mozGetUserMedia;
 function webCam(inUseDevice) {
   var w = inUseDevice.width();
-  
   navigator.getUserMedia(
     { video: true },
     function(mediaStream) {
         $('<video>')
             .appendTo(inUseDevice)
+            .width(w)
             .prop('src', window.URL.createObjectURL(mediaStream))
             .on('loadedmetadata', function(e) {
                 this.play();
