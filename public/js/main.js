@@ -27,17 +27,51 @@ $("#timelineButton").click(function(){
   function assignColor(){
     return colors.splice(0,1)[0];
   }
-  
   function addParticipants(newName){
-    $("#participants").append("<div class='participant' id='"+newName+"'>"+newName+"</div>")
+    $("#participants").append("<div class='participant' id='"+newName+"'></div>");
     
     $("#"+newName).css("color",assignColor());
+    $("#"+newName).append("<div class='inUseDevice'</div>");
+    
+   
+    $("#"+newName).append("<p>"+newName+"</p>");
+
   }
   
 
 //at start:
-    nameRoom("my room"); 
-    addParticipants("\uD83E\uDD16"); //add AI
+  nameRoom("my room"); 
+  addParticipants("\uD83E\uDD16"); //add AI
+  
+navigator.getUserMedia = navigator.getUserMedia ||
+                         navigator.webkitGetUserMedia ||
+                         navigator.mozGetUserMedia;
+function webCam(newName){
+  navigator.getUserMedia(
+    { audio: false, video: true },
+    function(mediaStream) {
+      $("#"+newName+" .inUseDevice").append("<video class='cam' id='"+newName+"cam'></video>");
+      var video = document.querySelector("#"+newName+"cam");
+      video.src = window.URL.createObjectURL(mediaStream);
+      video.onloadedmetadata = function(e) {
+        video.play();
+      };
+    },
+    function(err) { console.log(err.name); }
+  );
+
+}
+///*------------- WEBRTC ---------------*/
+//var webrtc = new SimpleWebRTC({
+//    // the id/element dom element that will hold "our" video
+//    localVideoEl: 'webcam',
+//    // the id/element dom element that will hold remote videos
+//    remoteVideosEl: 'video',
+//    // immediately ask for camera access
+//    autoRequestMedia: true,
+//    url: location.href,
+//    enableDataChannels: true      
+//  });
 
 /*-------------TIMELINE---------------*/
 
@@ -53,6 +87,8 @@ app.init = function() {
         name = prompt('What is your name?', 'type your name here');
       
         addParticipants(name);
+      
+        webCam(name);
 
         //init socket with server
         //meaning connect to the server

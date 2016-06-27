@@ -16,6 +16,13 @@
   .participant{
     margin: 0 10px;
     display:inline-table;
+    position:relative;
+    vertical-align: top;
+  }
+  .inUseDevice{
+    width:20vh;
+    height:20vh;
+    background-color:blue;
   }
   #timelineButton{
     position: absolute;

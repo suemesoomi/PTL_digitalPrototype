@@ -1,13 +1,20 @@
-//JS in-class 3/3/2015
+var fs = require('fs');
+var https = require('https');
+var privateKey  = fs.readFileSync('server.key', 'utf8');
+var certificate = fs.readFileSync('server.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
 
 var express = require('express');
 var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+//var server = require('http').Server(app);
+var httpsServer = https.createServer(credentials, app);
+
+var io = require('socket.io')(httpsServer);
 var port = 9000;
 
 app.use('/', express.static(__dirname + '/public'));
-server.listen(port, function() {
+httpsServer.listen(port, function() {
     console.log('Server running at port:' + port);
 });
 
@@ -74,3 +81,39 @@ io.on('connection', function(socket) {
     });
 
 });
+
+///*----------- WEBRTC-------------*/
+//var sockets = require('signal-master/sockets');
+//sockets(httpsServer, {
+//  "rooms": {
+//    "maxClients": 0
+//  },
+//  "stunservers": [
+//    {
+//      "url": "stun:stun.l.google.com:19302"
+//    }
+//  ],
+//  "turnservers": [
+//    {
+//      "urls": ["turn:your.turn.servers.here"],
+//      "secret": "turnserversharedsecret",
+//      "expiry": 86400
+//    }
+//  ]
+//});
+//
+//var roomNumber = 0;
+//var availableRooms = [];
+//// var waiting = false;
+//app.get('/get-room', function(req, res){
+//  if (availableRooms.length){
+//    res.send(availableRooms.shift());
+//  } else {
+//    res.send('room'+roomNumber);
+//    roomNumber++;
+//  }
+//});
+//
+//app.get('/waiting', function(req, res){
+//  availableRooms.push(req.query.roomName);
+//});
