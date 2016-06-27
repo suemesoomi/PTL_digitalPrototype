@@ -39,10 +39,10 @@ $("#timelineButton").click(function(){
   }
   
 
-//at start:
-  nameRoom("my room"); 
+//at start: 
   addParticipants("\uD83E\uDD16"); //add AI
-  
+
+/*------------- USER WEBCAM ---------------*/  
 navigator.getUserMedia = navigator.getUserMedia ||
                          navigator.webkitGetUserMedia ||
                          navigator.mozGetUserMedia;
@@ -61,7 +61,7 @@ function webCam(newName){
   );
 
 }
-///*------------- WEBRTC ---------------*/
+///*------------- WEBRTC NOT ENABLED YET---------------*/
 //var webrtc = new SimpleWebRTC({
 //    // the id/element dom element that will hold "our" video
 //    localVideoEl: 'webcam',
@@ -85,18 +85,18 @@ app.init = function() {
         //create a name input using prompt
         //first is the prompt, second arg is the in the input
         name = prompt('What is your name?', 'type your name here');
-      
         addParticipants(name);
       
         webCam(name);
-
         //init socket with server
         //meaning connect to the server
         //don't need to put anything in io.connect() bc
         //server is hosting everything incl socket
         socket = io.connect();
+
         socket.on('greetings', function(res) {
             console.log(res);
+            startMsg(res, name);
         });
 
         socket.on('confirm', function(res) {
@@ -104,7 +104,7 @@ app.init = function() {
         });
 
         socket.on('current users', function(res) {
-            console.log(res);
+            console.log('current users: '+res);
         });
 
         socket.on('broadcast message', function(res) {
@@ -112,9 +112,11 @@ app.init = function() {
         });
 
         attachEvents();
+
     };
 
     var attachEvents = function() {
+        var state = 0;
         //keeping every eventlistener 
         $('#js-btn-send').on('click', function() {
             //after user clicks
@@ -131,10 +133,12 @@ app.init = function() {
                 // message_one: "hey lovely.",
                 // message_two: "hola!",
                 user: name,
-                msg: chat_msg
+                msg: chat_msg,
+                state: state
             });
             // Reset input field
             $('#js-ipt-text').val('');
+        
         });
 
         $('#chat-input').keyup(function(event){
@@ -150,12 +154,20 @@ app.init = function() {
             // emit a chat message to server
             socket.emit('message', {
                 name: name,
-                msg: chat_msg
+                msg: chat_msg,
+                state: state
             });
+              
+             
             // Reset input field
             $('#js-ipt-text').val('');
             }
+         
+          
+      
         });
+      
+      
 
     //mousemove event test
     // $(window).on('mousemove', function(res){
@@ -174,6 +186,7 @@ app.init = function() {
 
     //listen for clients
     socket.on('clients', function(res) {
+        console.log('this is the res: '+res);
         var tplToCompile = $('#tpl-chat-item').html();
         var compiled = _.template(tplToCompile)({
             timestamp: 'now',
@@ -181,15 +194,51 @@ app.init = function() {
         });
         $('#chat-container').prepend(compiled);
         console.log(res.data);
+      /*----------------KEEP TRACK OF STATES----------------*/
+        console.log("state#: "+res.data.state);
+          if(res.data.state==1){
+            contactsPopup();
+            nameRoom(res.data.msg)
+          } else if(res.data.state==2){
+            //date of meeting
+          }
+    });
+
+    socket.on('botRes', function(res) {
+        var tplToCompile = $('#tpl-bot-item').html();
+        var compiled = _.template(tplToCompile)({
+            timestamp: 'now',
+            msg: res.msg,
+            name: res.name,
+            state: res.state
+        });
+        
+            $('#chat-container').prepend(compiled);
+        console.log(res.data);
     });
  };
+
+var startMsg = function(response, name){
+    var data = {'current':0,'name': 'AI Bot', 'msg': 'Hi, '+name+'. What would you like to name this meeting?'};
+    // console.log('start message is: '+response.msg + name);
+    // var greeting = response.msg+', '+ name+'. What would you like to name this meeting?';
+    var tplToCompile = $('#tpl-bot-item').html();
+    var compiled = _.template(tplToCompile)({
+        timestamp: 'now',
+        msg: data.msg,
+        name: data.name,
+        state: data.state
+        // message: greeting
+    });
+    $('#chat-container').prepend(compiled);
+}
 
 start();
 };
 
 app.init();
 
-//add contacts
+/*----------------CONTACTS WINDOW POPUP----------------*/
 function contactsPopup(){
    $("#contactsPopup").css("width","60%");
   var contactHeight = ($("#contactsPopup").height())-($(".server-msg").outerHeight());

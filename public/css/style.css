@@ -119,7 +119,23 @@
   width: 80%;
   font-size: 1.5em;
 }
+.bot-item {
+	width: 100%;
+	margin: 10px 0px;
+	color: #7F7F7F;
+}
 
+.bot-item .left {
+	width: 20%;
+	color: #7F7F7F;
+}
+
+.bot-item .right {
+	padding-left: 20px;
+	width: 80%;
+	font-size: 1.5em;
+	color: #7F7F7F;
+}
 .timestamp {
   font-size: 0.75em;
 }

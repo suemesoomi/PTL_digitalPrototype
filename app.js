@@ -20,6 +20,24 @@ httpsServer.listen(port, function() {
 
 var users = [];
 
+var aiArray = {
+    1: {
+        "name":'AI bot',
+        "msg": 'Great. Started workspace for _. Who do you want to invite to attend the meeting?',
+        "state": 1
+    },
+    2: {
+        "name":'AI bot',
+        "msg": 'I\'ve added _ to the meeting. What is the date and time that the meeting will take place?',
+        "state": 2
+    },
+    3: {
+        "name":'AI bot',
+        "msg":'Got it. Sending a calendar invite for _.',
+        "state": 3
+    }
+};
+
 //.on = listener function (for an event)
 //everything on the server happens in .on scope
 io.on('connection', function(socket) {
@@ -43,6 +61,8 @@ io.on('connection', function(socket) {
     	currentUsers: users
     });
 
+    var state = 0;
+
     //listens for user disconnection
     socket.on('disconnect', function(){
     	console.log('a user '+socket.id+ ' just disconnected.');
@@ -62,23 +82,59 @@ io.on('connection', function(socket) {
 
     //need to send back id to cliet bc only the server knows it
     socket.emit('greetings', {
-    	message: "Hi",
-    	data: socket.id
+    	msg: "Hi",
+    	data: socket.id,
+        state: 0
     });
 
-    socket.on('message', function(d){
-      console.log("message received");
-      console.log(d)
-    	console.log(d.msg);
+    socket.on('message', function(res){
+    	console.log(res.state);
+        //call parseResponse function
+        parseState(res);
+        parseRes(res);
     	//broadcast to all
     	io.sockets.emit('clients', {
-    		data: d
+    		data: res
     	})
     	//broadcast to one
     	// socket.emit('confirmed', {
     	// 	confirm: res.message_real
     	// });
     });
+
+    var parseState = function(userRes) {
+        //change state for first scenario
+        state+=1;
+        userRes.state = state;
+        console.log("current user state: " + userRes.state);
+        chooseBotRes(userRes);
+    }
+
+    var parseRes = function(userRes) {
+        //parse reseponse for other parts of the meeting
+    }
+
+    var chooseBotRes = function(res) {
+        setTimeout(function() {
+        var currentRes = aiArray[res.state];
+        // if (res.state == 2){
+            console.log('got to state 2 with '+res.msg);
+            var altRes = currentRes.msg.replace('_', res.msg);
+            // currentRes.msg = altRes;
+            // console.log(currentRes.msg);
+            io.sockets.emit('botRes', {
+            msg: altRes,
+            name: currentRes.name,
+            state: currentRes.state
+        })
+        // } else {
+        // console.log('this is currentRes: '+currentRes.msg);
+        // io.sockets.emit('botRes', {
+        //     data: currentRes
+        // })
+    // }
+    }, 2000);
+}
 
 });
 
