@@ -97,42 +97,43 @@
 </div>
 
 <!-- Underscore template -->
-	<script id="tpl-chat-item" type="text/html">
+<script id="tpl-chat-item" type="text/html">
 		<div class="chat-item">
 			<div class="left">
 				<div class="timestamp">
-					<%- timestamp %>
+					<%= timestamp %>
 				</div>
 				<div class="user">
-					<%- data.name %>
+					<%= name %>
 				</div>
 			</div>
 			<div class="right">
-				<%- data.msg %>
+				<%= msg %>
 			</div>
 			<!-- return to normal flow -->
 			<div class="clearfix">
 			</div>
 		</div>
-	</script>
-      <script id="tpl-bot-item" type="text/html">
-      <div class="bot-item">
-          <div class="left">
-              <div class="timestamp">
-                  <%= timestamp %>
-              </div>
-              <div class="user">
-                  <%= name %>
-              </div>
-          </div>
-          <div class="right">
-              <%= msg %>
-          </div>
-          <!-- return to normal flow -->
-          <div class="clearfix">
-          </div>
-      </div>
-	</script>
+</script>
+
+<script id="tpl-bot-item" type="text/html">
+    <div class="bot-item">
+        <div class="left">
+            <div class="timestamp">
+                <%= timestamp %>
+            </div>
+            <div class="user">
+                <%= name %>
+            </div>
+        </div>
+        <div class="right">
+            <%= msg %>
+        </div>
+        <!-- return to normal flow -->
+        <div class="clearfix">
+        </div>
+    </div>
+</script>
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/underscore.min.js"></script>

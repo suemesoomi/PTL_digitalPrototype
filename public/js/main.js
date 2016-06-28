@@ -144,7 +144,8 @@ app.init = function() {
                 // message_two: "hola!",
                 user: name,
                 msg: chat_msg,
-                state: state
+                state: state,
+              timestamp: 'now'
             });
             // Reset input field
             $('#js-ipt-text').val('');
@@ -165,7 +166,8 @@ app.init = function() {
             socket.emit('message', {
                 name: name,
                 msg: chat_msg,
-                state: state
+                state: state,
+              timestamp: 'now'
             });
               
              
@@ -195,22 +197,17 @@ app.init = function() {
     // });
 
     //listen for clients
-    socket.on('clients', function(res) {
+
+   socket.on('clients', function(res) {
         console.log('this is the res: '+res);
         var tplToCompile = $('#tpl-chat-item').html();
-        var compiled = _.template(tplToCompile)({
-            timestamp: 'now',
-            data: res.data
-        });
+        var compiled = _.template(tplToCompile)(res);
         $('#chat-container').prepend(compiled);
         console.log(res.data);
-      /*----------------KEEP TRACK OF STATES----------------*/
+     /*----------------KEEP TRACK OF STATES----------------*/
         console.log("state#: "+res.data.state);
           if(res.data.state==1){
-            
-            
             nameRoom(res.data.msg);
-//            $('#contactsButton').click(contactsPopup);
           } else if(res.data.state==2){
             
           }
@@ -230,18 +227,11 @@ app.init = function() {
     });
  };
 
-var startMsg = function(response, name){
-    var data = {'current':0,'name': 'AI Bot', 'msg': 'Hi, '+name+'. What would you like to name this meeting?'};
+var startMsg = function(response){
     // console.log('start message is: '+response.msg + name);
     // var greeting = response.msg+', '+ name+'. What would you like to name this meeting?';
     var tplToCompile = $('#tpl-bot-item').html();
-    var compiled = _.template(tplToCompile)({
-        timestamp: 'now',
-        msg: data.msg,
-        name: data.name,
-        state: data.state
-        // message: greeting
-    });
+    var compiled = _.template(tplToCompile)(response);
     $('#chat-container').prepend(compiled);
 }
 

@@ -58,7 +58,7 @@ var aiCommands = {
     "add to meeting": {
         'triggers': ['add', 'add someone', 'add to meeting'],
         'matchReq': 2,//not used right now
-        'response': "Whom would you like to add?"
+        'response': 'Whom would you like to add? <button type="button" id="contactsButton">Contacts</button>'
     },
     "off the record": {
         'triggers': ['off the record', 'leave', 'leave the room','GTFO'],
