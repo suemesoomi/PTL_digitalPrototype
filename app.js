@@ -23,7 +23,7 @@ var users = [];
 var aiArray = {
     1: {
         "name":'AI bot',
-        "msg": 'Great. Started workspace for _. Who do you want to invite to attend the meeting?',
+        "msg": 'Great. Started workspace for _. Who do you want to invite to attend the meeting? <button type="button" id="contactsButton">Contacts</button>',
         "state": 1
     },
     2: {

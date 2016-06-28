@@ -8,20 +8,23 @@
   }
   #participants{
     position:absolute;
-    width:60%;
-    bottom:20px;
-    left:20%;
+    width:96vw;
+    bottom:10px;
+    padding-left:10px;
     text-align: center;
+    display:flex;
+  }
+  #participants p{
+    margin:0;
   }
   .participant{
     margin: 0 10px;
-    display:inline-table;
     position:relative;
     vertical-align: top;
   }
   .inUseDevice{
-    width:20vh;
-    height:20vh;
+    width:7vw;
+    height:auto;
     position:relative;
   }
   .inUseDevice video{
@@ -31,13 +34,20 @@
   }
   #timelineButton{
     position: absolute;
-    bottom:10vh;
-    right:10vw;
+    top:0;
+    right:0;
+    width:2vw;
+    height:100vh;
+  }
+  .vertical-text{
+    transform: rotate(90deg);
   }
   #binButton{
     position: absolute;
-    bottom:10vh;
-    left:10vw;
+    top:0;
+    left:0;
+    width:2vw;
+    height:100vh;
   }
   .slideWindow{
     height: 100%; 
@@ -229,4 +239,7 @@
 .add h1{
   color:white;
   margin:0;
+}
+.on{
+  width:20%;
 }

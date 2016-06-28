@@ -11,7 +11,10 @@ $("#timelineButton").click(function(){
   $(".closeButton").click(function(){ 
     $(this).parent().css("width","0");
   });
-  
+  $(".overlay").click(function(){ 
+    $(this).parent().css("width","0");
+  });
+
   function openWindow(window) {
     window.css("width","100%");
   }
@@ -204,12 +207,12 @@ app.init = function() {
       /*----------------KEEP TRACK OF STATES----------------*/
         console.log("state#: "+res.data.state);
           if(res.data.state==1){
-            //BUTTON FOR CONTACTS POPUP
-            contactsPopup();
             
-            nameRoom(res.data.msg)
+            
+            nameRoom(res.data.msg);
+//            $('#contactsButton').click(contactsPopup);
           } else if(res.data.state==2){
-            //date of meeting
+            
           }
     });
 
@@ -277,4 +280,8 @@ $("#contactsPopup .closeButton").click(function(){
   for(i=0; i<contacts.length;i++){
     addParticipants(contacts[i])
   }
-})
+});
+
+$('#chat-container').on('click', '#contactsButton', function(){
+  contactsPopup();
+});
