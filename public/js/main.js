@@ -103,12 +103,25 @@ app.init = function() {
         //don't need to put anything in io.connect() bc
         //server is hosting everything incl socket
         socket = io.connect();
+        socket.emit('userInfo', {
+            userName: name,
+            userID: socket.id,
+        }); 
+
+        socket.on('timeline', function(res){
+            console.log("timeline: "+res);
+            var tplToCompile = $('#tpl-chat-item').html();
+            var compiled = _.template(tplToCompile)(res);
+            $('#chat-container').prepend(compiled);
+        });
 
         socket.on('greetings', function(res) {
             console.log(res);
             startMsg(res, name);
         });
-
+        socket.on('joinedUser', function(res) {
+          addParticipants(res);
+        });
         socket.on('confirm', function(res) {
             console.log(res);
         });

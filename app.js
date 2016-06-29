@@ -48,7 +48,7 @@ var aiCommands = {
     "end meeting": {
         'triggers': ['end meeting', 'end this meeting', 'meeting over', 'end the meeting', 'end our meeting'],
         'matchReq': 2,//not used right now
-        'response': "Okay, ending your meeting."
+        'response': "Okay, ending your meeting." 
     },
     "schedule meeting": {
         'triggers': ['schedule', 'schedule meeting', 'schedule a meeting', 'reschedule', 'schedule a new meeting', 'add meeting', 'add a meeting time'],
@@ -84,7 +84,7 @@ io.on('connection', function(socket) {
     var thisUser = {};
     socket.on('userInfo', function(res){
 
-        console.log("this is the user name: "+res.userName);
+        
 
         var userRecord = "user" + userCount();
         console.log("New User Record is: " + userRecord);
@@ -97,7 +97,7 @@ io.on('connection', function(socket) {
         };
 
         console.log('This is the master timeline: '+masterTimeline);
-
+//        console.log('These are the users: '+users[userRecord].name);
         for (item in masterTimeline){
             io.sockets.emit('timeline', masterTimeline[item]);
         }
@@ -111,6 +111,13 @@ io.on('connection', function(socket) {
         }
 
         io.sockets.emit('greetings', emitObj);
+      
+        
+      
+        for(i=0;i<userCount();i++){
+          console.log("this is the user name: "+users[i]);
+          io.sockets.emit('joinedUser', users[i]);
+        }
 
         record(emitObj);
 
