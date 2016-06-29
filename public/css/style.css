@@ -7,15 +7,6 @@
   font-family: sans-serif;
   padding:0 3vw;
 }
-.photo{
-  width:300px;
-  border: red solid 4px;
-}
-.url{
-  width:40vw;
-  height:50vh;
-  border: red solid 4px;
-}
 #participants{
   position:absolute;
   width:96vw;
@@ -87,7 +78,28 @@
   right:2vw;
   position:absolute;
 }
+.photo{
+  width:300px;
+  border: red solid 4px;
+}
+.url{
+  width:40vw;
+  height:50vh;
+  border: red solid 4px;
+}
+/*-------------------BIN----------------------*/
 
+#bin{
+  display:flex;
+}
+.binInput{
+  width:10vw;
+  height:10vw;
+  margin:2vw;
+}
+#photoInput{
+  display:none;
+}
 /*-----------------TIMELINE-----------------*/
 
 * {

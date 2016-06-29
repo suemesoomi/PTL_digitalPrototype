@@ -277,7 +277,14 @@ $('#chat-container').on('click', '#contactsButton', function(){
 });
 
 /*----------------BIN----------------*/
+
 var $photoInput = $("#photoInput");
+
+//PHOTO INPUT HACK
+  $("#photoInputButton").click(function(){
+    $photoInput.click();
+    console.log("clicked");
+  });
 
 $photoInput.change(function(event){
   var source = URL.createObjectURL(this.files[0]); 
@@ -289,18 +296,25 @@ $photoInput.change(function(event){
 });
 
 
-var $urlInput = $("#urlInput");
-$urlInput.on("keydown", function(event){
-  if(event.keyCode==13){
-    var source = $urlInput.val();
-//    var url = $('<object type="text/html" class="url" data="'+source+'">');
-    
-//    var url = $('<div class="url">');
-//    url.load(source);
-    var url = $('<iframe>',{ "class": 'url', src: source });
+$("#urlInputButton").click(function(){
+  source = prompt('Insert URL', 'Enter URL');
+  
+  var url = $('<iframe>',{ "class": 'url', src: source });
     $("#workRoom").append(url);
     url.draggable();
-  }
-});
+  
+})
+
+//var $urlInput = $("#urlInput");
+//$urlInput.on("keydown", function(event){
+//  if(event.keyCode==13){
+//    var source = $urlInput.val();
+////    var url = $('<object type="text/html" class="url" data="'+source+'">');
+//    
+////    var url = $('<div class="url">');
+////    url.load(source);
+//    
+//  }
+//});
 
 
