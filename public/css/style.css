@@ -1,82 +1,92 @@
 /*-----------------WORKROOM------------------*/
 .workspaceWindow{
-    height:100%;
-    width:100%;
-    position:fixed;
-    padding-left:20px;
-    font-family: sans-serif;
-  }
-  #participants{
-    position:absolute;
-    width:96vw;
-    bottom:10px;
-    padding-left:10px;
-    text-align: center;
-    display:flex;
-  }
-  #participants p{
-    margin:0;
-  }
-  .participant{
-    margin: 0 10px;
-    position:relative;
-    vertical-align: top;
-  }
-  .inUseDevice{
-    width:7vw;
-    height:auto;
-    position:relative;
-  }
-  .inUseDevice video{
-    position:absolute;
-    bottom:0;
-    left:0;
-  }
-  #timelineButton{
-    position: absolute;
-    top:0;
-    right:0;
-    width:2vw;
-    height:100vh;
-  }
-  .vertical-text{
-    transform: rotate(90deg);
-  }
-  #binButton{
-    position: absolute;
-    top:0;
-    left:0;
-    width:2vw;
-    height:100vh;
-  }
-  .slideWindow{
-    height: 100%; 
-    width: 0; 
-    position: fixed;
-    z-index: 1;
-    overflow-x: hidden;
-    transition: 0.5s; 
-    display:flex;
-  }
-  .timelineWindow{
-    right:0;
-  }
-  .binWindow{
-    left:0;
-  }
-  .overlay{
-    background-color: rgba(255,255,255,0.6);
-  }
-  #timeline, #bin{
-    width:60vw;
-    height:100%;
-    background-color: aquamarine;
-  }
-  .closeButton{
-    top:2vh;
-    right:2vw;
-    position:absolute;
-  }
+  height:100%;
+  width:100%;
+  position:fixed;
+  padding-left:20px;
+  font-family: sans-serif;
+  padding:0 3vw;
+}
+.photo{
+  width:300px;
+  border: red solid 4px;
+}
+.url{
+  width:40vw;
+  height:50vh;
+  border: red solid 4px;
+}
+#participants{
+  position:absolute;
+  width:96vw;
+  bottom:10px;
+  padding-left:10px;
+  text-align: center;
+  display:flex;
+}
+#participants p{
+  margin:0;
+}
+.participant{
+  margin: 0 10px;
+  position:relative;
+  vertical-align: top;
+}
+.inUseDevice{
+  width:7vw;
+  height:auto;
+  position:relative;
+}
+.inUseDevice video{
+  position:absolute;
+  bottom:0;
+  left:0;
+}
+#timelineButton{
+  position: absolute;
+  top:0;
+  right:0;
+  width:2vw;
+  height:100vh;
+}
+.vertical-text{
+  transform: rotate(90deg);
+}
+#binButton{
+  position: absolute;
+  top:0;
+  left:0;
+  width:2vw;
+  height:100vh;
+}
+.slideWindow{
+  height: 100%; 
+  width: 0; 
+  position: fixed;
+  z-index: 1;
+  overflow-x: hidden;
+  transition: 0.5s; 
+  display:flex;
+}
+.timelineWindow{
+  right:0;
+}
+.binWindow{
+  left:0;
+}
+.overlay{
+  background-color: rgba(255,255,255,0.6);
+}
+#timeline, #bin{
+  width:60vw;
+  height:100%;
+  background-color: aquamarine;
+}
+.closeButton{
+  top:2vh;
+  right:2vw;
+  position:absolute;
+}
 
 /*-----------------TIMELINE-----------------*/
 

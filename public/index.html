@@ -6,10 +6,12 @@
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 <link rel="stylesheet" href="css/normalize.min.css">
 <link rel="stylesheet" href="css/style.css">
-
+<link rel="stylesheet" href="css/jquery-ui.css">
 
 
 <div class="workspaceWindow ">
+  <div id="workRoom"></div>
+  
   <h1 id="roomName"></h1>
 
   <div id="participants">
@@ -40,6 +42,7 @@
 			<div id="chat-input">
 
 				<div class="left">
+                    <div id="inputMenu"></div>
 					<input type="text" id="js-ipt-text" placeholder="Type here">
 				</div>
 
@@ -91,7 +94,16 @@
 </div>
 
 <div class="binWindow slideWindow">
-  <div id="bin"></div>
+  <div id="bin">
+    <div class="binInput" id="photoInputButton">
+      <input id="photoInput" type="file" accept="image/*">
+      Add Photo
+    </div>
+    <div class="binInput" id="photoInputButton">
+      <input id="urlInput" type="text">
+      URL
+    </div>
+  </div>
   <div class="overlay" style="width:40vw; height:100%;"></div>
   <button type="button" class="closeButton">Close</button>
 </div>
@@ -136,6 +148,7 @@
 </script>
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/underscore.min.js"></script>
 <!--<script type="text/javascript" src="js/SimpleWebRTClatest-v2.js"></script>-->
 <script type="text/javascript" src="js/main.js"></script>

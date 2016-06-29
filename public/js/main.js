@@ -275,3 +275,32 @@ $("#contactsPopup .closeButton").click(function(){
 $('#chat-container').on('click', '#contactsButton', function(){
   contactsPopup();
 });
+
+/*----------------BIN----------------*/
+var $photoInput = $("#photoInput");
+
+$photoInput.change(function(event){
+  var source = URL.createObjectURL(this.files[0]); 
+  var photo = $('<img>', { "class": 'photo', src: source });
+  $("#workRoom").append(photo);
+  photo.css("height"," ");
+  photo.draggable();
+//        .resizable();
+});
+
+
+var $urlInput = $("#urlInput");
+$urlInput.on("keydown", function(event){
+  if(event.keyCode==13){
+    var source = $urlInput.val();
+//    var url = $('<object type="text/html" class="url" data="'+source+'">');
+    
+//    var url = $('<div class="url">');
+//    url.load(source);
+    var url = $('<iframe>',{ "class": 'url', src: source });
+    $("#workRoom").append(url);
+    url.draggable();
+  }
+});
+
+

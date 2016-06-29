@@ -295,6 +295,11 @@ io.on('connection', function(socket) {
 
 });
 
+/*----------- LISTEN FOR MOBILE -------------*/
+app.get('/Upload-photo', (req, res) => {
+    res.send("hello");
+});
+
 ///*----------- WEBRTC-------------*/
 //var sockets = require('signal-master/sockets');
 //sockets(httpsServer, {
