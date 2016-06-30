@@ -265,3 +265,8 @@
 .on{
   width:20%;
 }
+
+.chat-item img{
+  width:50%;
+  height:auto;
+}

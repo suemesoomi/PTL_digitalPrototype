@@ -137,7 +137,7 @@ app.init = function() {
         attachEvents();
 
     };
-
+  
     var attachEvents = function() {
         var state = 0;
         //keeping every eventlistener 
@@ -145,9 +145,9 @@ app.init = function() {
             //after user clicks
             var chat_msg = $('#js-ipt-text').val();
             console.log(chat_msg);
-            var re = /<script\b[^>]*>([\s\S]*?)<\/script>/gm;
-            var isScript;
-            isScript = re.test(chat_msg);
+//            var re = /<script\b[^>]*>([\s\S]*?)<\/script>/gm;
+//            var isScript;
+//            isScript = re.test(chat_msg);
             //.emit submits or sends an event
             //you can name it anything and you can
             //attach anything (string, num etc.)
@@ -169,10 +169,10 @@ app.init = function() {
             if(event.keyCode == 13){
              var chat_msg = $('#js-ipt-text').val();
              console.log('enter pressed & value is: '+chat_msg);
-             var re = /<script\b[^>]*>([\s\S]*?)<\/script>/gm;
-            var isScript;
-            isScript = re.test(chat_msg);
-            console.log(isScript);
+//             var re = /<script\b[^>]*>([\s\S]*?)<\/script>/gm;
+//            var isScript;
+//            isScript = re.test(chat_msg);
+//            console.log(isScript);
 
             console.log('Sending: ' + chat_msg);
             // emit a chat message to server
@@ -218,12 +218,12 @@ app.init = function() {
         $('#chat-container').prepend(compiled);
         console.log(res.data);
      /*----------------KEEP TRACK OF STATES----------------*/
-        console.log("state#: "+res.data.state);
-          if(res.data.state==1){
-            nameRoom(res.data.msg);
-          } else if(res.data.state==2){
-            
-          }
+//        console.log("state#: "+res.data.state);
+//          if(res.data.state==1){
+//            nameRoom(res.data.msg);
+//          } else if(res.data.state==2){
+//            
+//          }
     });
 
     socket.on('botRes', function(res) {
@@ -289,6 +289,16 @@ $('#chat-container').on('click', '#contactsButton', function(){
   contactsPopup();
 });
 
+//open links from timeline
+$('#chat-container').on('click', 'img', function(){
+  var source = this.src;
+  console.log("clicked image: "+source)
+  var photo = $('<img>', { "class": 'photo', src: source });
+  $("#workRoom").append(photo);
+  photo.css("height"," ");
+  photo.draggable();
+});
+
 /*----------------BIN----------------*/
 
 var $photoInput = $("#photoInput");
@@ -296,7 +306,6 @@ var $photoInput = $("#photoInput");
 //PHOTO INPUT HACK
   $("#photoInputButton").click(function(){
     $photoInput.click();
-    console.log("clicked");
   });
 
 $photoInput.change(function(event){
@@ -305,7 +314,10 @@ $photoInput.change(function(event){
   $("#workRoom").append(photo);
   photo.css("height"," ");
   photo.draggable();
-//        .resizable();
+  //send to timeline by tricking js into text input
+  $('#js-ipt-text').val("<img src="+source+">");
+  $('#js-btn-send').click();
+  
 });
 
 
@@ -315,19 +327,8 @@ $("#urlInputButton").click(function(){
   var url = $('<iframe>',{ "class": 'url', src: source });
     $("#workRoom").append(url);
     url.draggable();
-  
-})
-
-//var $urlInput = $("#urlInput");
-//$urlInput.on("keydown", function(event){
-//  if(event.keyCode==13){
-//    var source = $urlInput.val();
-////    var url = $('<object type="text/html" class="url" data="'+source+'">');
-//    
-////    var url = $('<div class="url">');
-////    url.load(source);
-//    
-//  }
-//});
-
+  //send to timeline by tricking js into text input
+  $('#js-ipt-text').val("<a target='_blank' href="+source+">"+source+"</a>");
+  $('#js-btn-send').click();
+});
 
