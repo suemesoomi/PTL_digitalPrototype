@@ -114,10 +114,10 @@ io.on('connection', function(socket) {
       
         
       
-        for(i=0;i<userCount();i++){
-          console.log("this is the user name: "+users[i]);
-          io.sockets.emit('joinedUser', users[i]);
-        }
+//        for(i=0;i<userCount();i++){
+          console.log("this is the user name: "+thisUser.name);
+          io.sockets.emit('joinedUser', thisUser.name);
+//        }
 
         record(emitObj);
 

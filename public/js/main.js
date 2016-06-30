@@ -116,18 +116,27 @@ app.init = function() {
         });
 
         socket.on('greetings', function(res) {
-            console.log(res);
+//            console.log(res);
             startMsg(res, name);
         });
         socket.on('joinedUser', function(res) {
-          addParticipants(res);
+          console.log("joined user: "+res);
+          if (res!==name){
+            addParticipants(res);
+          }
         });
         socket.on('confirm', function(res) {
             console.log(res);
         });
-
-        socket.on('current users', function(res) {
-            console.log('current users: '+res);
+        var usersExisting = false;
+        socket.on('current users', function(res) { 
+          if(!usersExisting){
+            for (var u in res.currentUsers){
+              console.log("current users:"+res.currentUsers[u].name);
+              addParticipants(res.currentUsers[u].name);
+            }
+          }
+          usersExisting = true;
         });
 
         socket.on('broadcast message', function(res) {
@@ -238,22 +247,29 @@ app.init = function() {
             $('#chat-container').prepend(compiled);
         console.log(res.data);
     });
- };
+      
+    var passtoAI = function(contacts){
+   var string = '';
+   for (var i=0; i<contacts.length; i++){
+     if (i == 0){
+       string = string.concat(contacts[i]);
+     } else if (i == contacts.length-1){
+       string = string.concat(' and ');
+       string = string.concat(contacts[i]);
+     } else {
+       string = string.concat(', ');
+       string = string.concat(contacts[i]);
+     }
+     }
 
-var startMsg = function(response){
-    // console.log('start message is: '+response.msg + name);
-    // var greeting = response.msg+', '+ name+'. What would you like to name this meeting?';
-    var tplToCompile = $('#tpl-bot-item').html();
-    var compiled = _.template(tplToCompile)(response);
-    $('#chat-container').prepend(compiled);
-}
-
-start();
-};
-
-app.init();
-
-/*----------------CONTACTS WINDOW POPUP----------------*/
+   socket.emit('message', {
+               name: name,
+               msg: string,
+               state: state
+           });
+    }
+ 
+    /*----------------CONTACTS WINDOW POPUP----------------*/
 var contacts = [];
 
 function contactsPopup(){
@@ -278,8 +294,7 @@ $(".add").click(function(){
 });
 
 $("#contactsPopup .closeButton").click(function(){
-
-  //send contacts[] to AI
+  passtoAI(contacts);
   for(i=0; i<contacts.length;i++){
     addParticipants(contacts[i])
   }
@@ -298,6 +313,24 @@ $('#chat-container').on('click', 'img', function(){
   photo.css("height"," ");
   photo.draggable();
 });
+    
+
+};
+
+var startMsg = function(response){
+    // console.log('start message is: '+response.msg + name);
+    // var greeting = response.msg+', '+ name+'. What would you like to name this meeting?';
+    var tplToCompile = $('#tpl-bot-item').html();
+    var compiled = _.template(tplToCompile)(response);
+    $('#chat-container').prepend(compiled);
+}
+
+start();
+};
+
+app.init();
+
+
 
 /*----------------BIN----------------*/
 
@@ -314,6 +347,20 @@ $photoInput.change(function(event){
   $("#workRoom").append(photo);
   photo.css("height"," ");
   photo.draggable();
+
+  //make function to create canvas for annotating on!
+//  var canvas = document.getElementById('canvas'),
+//      context = canvas.getContext('2d');
+//
+//  canvas.width = photo.innerWidth;
+//  canvas.height = photo.innerHeight;
+//
+//  context.rect(0,0,canvas.width, canvas.height);
+//  
+//  draw();
+//  
+//  photo.append(canvas)
+  
   //send to timeline by tricking js into text input
   $('#js-ipt-text').val("<img src="+source+">");
   $('#js-btn-send').click();
