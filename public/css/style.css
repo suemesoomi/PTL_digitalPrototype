@@ -80,22 +80,21 @@
 }
 .photo{
   width:300px;
-  border: red solid 4px;
+/*  border: red solid 4px;*/
 }
 .url{
   width:40vw;
   height:50vh;
-  border: red solid 4px;
+/*  border: red solid 4px;*/
 }
 .container{
   position:relative;
-  display: inline-block;
+  display: table-caption;
 }
-.annotateButton{
-  position:absolute;
-  left:0;
+.annotateClear, .annotateSend{
+  display:none;
 }
-#annotateCanvas{
+.annotateCanvas{
   position:absolute;
   left:0;
   top:0;

@@ -7,8 +7,7 @@ $("#timelineButton").click(function(){
   $("#binButton").click(function(){
     openWindow($(".binWindow"));
   });
-  
-  $(".closeButton").click(function(){ 
+  $(document).on('click', '.closeButton',function(){ 
     $(this).parent().css("width","0");
   });
   $(".overlay").click(function(){ 
@@ -351,41 +350,78 @@ function addPhoto(source){
 //  photo.css("height"," ");
   $("#workRoom").append(container);
   container.append(photo);
-  
   container.draggable();
+  
   photo.on('load',function(){
-    container.append($('<canvas>',{id:'annotateCanvas'}));
-  var canvas = document.getElementById('annotateCanvas'),
+    var $canvas = $('<canvas>',{"class":'annotateCanvas'})
+    container.append($canvas);
+  var canvas = $canvas[0],
       context = canvas.getContext('2d');
     canvas.width = container.children('img').outerWidth();
     canvas.height = container.children('img').outerHeight();
     context.rect(0,0,canvas.width, canvas.height);
-    draw(canvas, context);
-  var annotateButton =$('<button>',{"class":'annotateButton'});
+    context.drawImage(photo[0],0,0,photo.width(), photo.height());
+    
+  var annotateButton =$('<button>',{"class":'annotateButton'}),
+      annotateClear =$('<button>',{"class":'annotateClear'}),
+      annotateSend =$('<button>',{"class":'annotateSend'}),
+      closeButton =$('<input>',{type:"button", value:"close", "class":'closeImg'});
   annotateButton.text("annotate"); 
+  annotateClear.text("clear all");
+  annotateSend.text("send");
+  closeButton.text("close");
   container.append(annotateButton);
+  container.append(annotateClear);
+  container.append(annotateSend);
+  container.append(closeButton);
   });
   
 }
 
-
 $('#workRoom').on('click', 'button.annotateButton', function(){
   var container = $(this).parent();
   container.toggleClass("annotate");
-  
-  
+  var $canvas = $(this).siblings("canvas");
+  var canvas = $canvas[0],
+      context = canvas.getContext('2d');
+
   if(container.hasClass("annotate")){
-    $(this).css("color","red");
-    $(this).prev().css("display","block");
+    $(this).text("hide");
+    $(this).siblings("button").css("display","inline");
+    $canvas.css("display","block");
     container.draggable('disable');
+    draw(canvas, context);
   }else{
-    $(this).css("color","black");
+    $(this).text("annotate").css("color","black");
+    $(this).siblings("button").css("display","none");
     $(this).prev().css("display","none");
     container.draggable('enable');
   }
-  
 });
 
+$('#workRoom').on('click', 'button.annotateClear', function(){
+  var $canvas = $(this).siblings("canvas");
+  var canvas = $canvas[0],
+      context = canvas.getContext('2d');
+  canvas.width = $canvas.width();
+  canvas.height = $canvas.height();
+  context.rect(0,0,canvas.width, canvas.height);
+  var photo = $(this).siblings("img");
+  context.drawImage(photo[0],0,0,photo.width(), photo.height());
+});
+
+$('#workRoom').on('click', 'button.annotateSend', function(){
+  $(this).siblings(".annotateButton").click();
+  var $canvas = $(this).siblings("canvas");
+  var canvas = $canvas[0];
+  var source = canvas.toDataURL();
+  $('#js-ipt-text').val("<img src="+source+">");
+  $('#js-btn-send').click();
+});
+$('#workRoom').on('click', '.closeImg', function(){
+  $(this).parent().css("display","none");
+  
+});
 
 $("#urlInputButton").click(function(){
   source = prompt('Insert URL', 'Enter URL');
