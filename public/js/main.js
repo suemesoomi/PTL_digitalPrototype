@@ -307,11 +307,7 @@ $('#chat-container').on('click', '#contactsButton', function(){
 //open links from timeline
 $('#chat-container').on('click', 'img', function(){
   var source = this.src;
-  console.log("clicked image: "+source)
-  var photo = $('<img>', { "class": 'photo', src: source });
-  $("#workRoom").append(photo);
-  photo.css("height"," ");
-  photo.draggable();
+  addPhoto(source);
 });
     
 
@@ -341,29 +337,52 @@ var $photoInput = $("#photoInput");
     $photoInput.click();
   });
 
-$photoInput.change(function(event){
+$photoInput.change(function(event){  
   var source = URL.createObjectURL(this.files[0]); 
-  var photo = $('<img>', { "class": 'photo', src: source });
-  $("#workRoom").append(photo);
-  photo.css("height"," ");
-  photo.draggable();
-
-  //make function to create canvas for annotating on!
-//  var canvas = document.getElementById('canvas'),
-//      context = canvas.getContext('2d');
-//
-//  canvas.width = photo.innerWidth;
-//  canvas.height = photo.innerHeight;
-//
-//  context.rect(0,0,canvas.width, canvas.height);
-//  
-//  draw();
-//  
-//  photo.append(canvas)
-  
+  addPhoto(source);
   //send to timeline by tricking js into text input
   $('#js-ipt-text').val("<img src="+source+">");
   $('#js-btn-send').click();
+});
+
+function addPhoto(source){
+  var container = $('<div>',{"class":'container'});
+  var photo = $('<img>', {"class":'photo', src: source }); 
+//  photo.css("height"," ");
+  $("#workRoom").append(container);
+  container.append(photo);
+  
+  container.draggable();
+  photo.on('load',function(){
+    container.append($('<canvas>',{id:'annotateCanvas'}));
+  var canvas = document.getElementById('annotateCanvas'),
+      context = canvas.getContext('2d');
+    canvas.width = container.children('img').outerWidth();
+    canvas.height = container.children('img').outerHeight();
+    context.rect(0,0,canvas.width, canvas.height);
+    draw(canvas, context);
+  var annotateButton =$('<button>',{"class":'annotateButton'});
+  annotateButton.text("annotate"); 
+  container.append(annotateButton);
+  });
+  
+}
+
+
+$('#workRoom').on('click', 'button.annotateButton', function(){
+  var container = $(this).parent();
+  container.toggleClass("annotate");
+  
+  
+  if(container.hasClass("annotate")){
+    $(this).css("color","red");
+    $(this).prev().css("display","block");
+    container.draggable('disable');
+  }else{
+    $(this).css("color","black");
+    $(this).prev().css("display","none");
+    container.draggable('enable');
+  }
   
 });
 
@@ -379,3 +398,6 @@ $("#urlInputButton").click(function(){
   $('#js-btn-send').click();
 });
 
+function annotate(item){
+  
+}

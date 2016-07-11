@@ -1,41 +1,44 @@
-function draw(){
+function draw(canvas, context){
     
     //DRAW--------------  
     // set lastX & Y to -1 at the start to indicate that we don't have a good value for it yet
     var lastX,lastY=-1;
-    var hue, size;
-    var eraser = false;
+//    var hue, size;
+//    var eraser = false;
+  
+  var size=10;
+  var hue =0;
 
-    function update(){
-      size = document.getElementById("brushSize").value;
-      hue = document.getElementById("hue").value;
-    }
+//    function update(){
+//      size = document.getElementById("brushSize").value;
+//      hue = document.getElementById("hue").value;
+//    }
+//
+//    update();
 
-    update();
-
-    $("#hue").on('input',function(){
-      update();
-      $("#previewSlider").css({
-        "background":"hsl("+hue+", 100%, 50%)"
-      });
-    });
-    $("#brushSize").on('input',function(){
-      update();
-      $("#previewSlider").css({
-        "height":size,
-        "width":size
-      });
-    });
-    $('#eraser').click(function(){
-      if($(this).hasClass('active')){
-        $(this).removeClass('active')
-        eraser = false;
-      } else {
-        $(this).addClass('active')
-        eraser = true;
-      }
-
-    });
+//    $("#hue").on('input',function(){
+//      update();
+//      $("#previewSlider").css({
+//        "background":"hsl("+hue+", 100%, 50%)"
+//      });
+//    });
+//    $("#brushSize").on('input',function(){
+//      update();
+//      $("#previewSlider").css({
+//        "height":size,
+//        "width":size
+//      });
+//    });
+//    $('#eraser').click(function(){
+//      if($(this).hasClass('active')){
+//        $(this).removeClass('active')
+//        eraser = false;
+//      } else {
+//        $(this).addClass('active')
+//        eraser = true;
+//      }
+//
+//    });
 
 
     function drawLine(context,x,y, size) {
@@ -44,7 +47,7 @@ function draw(){
         lastY = y;
       }
 
-      update();
+//      update();
 
       // Select a fill style
       context.globalCompositeOperation = "source-over";
@@ -66,42 +69,40 @@ function draw(){
 
       }
 
-    function erase(context, x, y, size){
-      if (lastX ==-1){
-        lastX = x;
-        lastY = y;
-      }
-
-      update();
-
-      context.globalCompositeOperation = "destination-out";
-      context.strokeStyle = "rgba(0,0,0,1)";
-      context.lineJoin = "round";
-      context.lineCap = "round";
-      // Draw a line
-      context.beginPath();
-      context.moveTo(lastX, lastY);
-      context.lineTo(x,y);
-      context.lineWidth = size*2;
-      context.stroke();
-      context.closePath();
-
-      lastX = x;
-      lastY = y;
-    }
+//    function erase(context, x, y, size){
+//      if (lastX ==-1){
+//        lastX = x;
+//        lastY = y;
+//      }
+//      update();
+//      context.globalCompositeOperation = "destination-out";
+//      context.strokeStyle = "rgba(0,0,0,1)";
+//      context.lineJoin = "round";
+//      context.lineCap = "round";
+//      // Draw a line
+//      context.beginPath();
+//      context.moveTo(lastX, lastY);
+//      context.lineTo(x,y);
+//      context.lineWidth = size*2;
+//      context.stroke();
+//      context.closePath();
+//
+//      lastX = x;
+//      lastY = y;
+//    }
 
    //TRACK MOUSE FOR DRAWING 
     var mouseX,mouseY,mouseDown=0;
 
     function sketch_mouseDown() {
         mouseDown=1;
-      if($("#draw").hasClass('active')){
-        if(!eraser){
+//      if($("#draw").hasClass('active')){
+//        if(!eraser){
           drawLine(context,mouseX,mouseY, size);
-        } else {
-          erase(context, mouseX, mouseY, size);
-        }
-      }
+//        } else {
+//          erase(context, mouseX, mouseY, size);
+//        }
+//      }
     }
 
     function sketch_mouseUp() {
@@ -115,13 +116,13 @@ function draw(){
         getMousePos(e);
 
         if (mouseDown==1) { 
-          if($("#draw").hasClass('active')){
-            if(!eraser){
+//          if($("#draw").hasClass('active')){
+//            if(!eraser){
               drawLine(context,mouseX,mouseY, size);
-            } else {
-              erase(context, mouseX, mouseY);
-            }
-          }
+//            } else {
+//              erase(context, mouseX, mouseY);
+//            }
+//          }
         }
     }
 
@@ -149,13 +150,13 @@ function draw(){
     function sketch_touchStart() {
       getTouchPos();
       if($("#draw").hasClass('active')){
-        if(!eraser){
+//        if(!eraser){
           drawLine(context,touchX,touchY, size);
           event.preventDefault(); 
-        } else {
-          erase(context, touchX, touchY, size);
-          event.preventDefault();
-        } 
+//        } else {
+//          erase(context, touchX, touchY, size);
+//          event.preventDefault();
+//        } 
       }
     }
 
