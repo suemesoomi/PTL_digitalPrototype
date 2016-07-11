@@ -1,22 +1,54 @@
+body{
+  font-family: 'Roboto', sans-serif;
+}
 /*-----------------WORKROOM------------------*/
 .workspaceWindow{
   height:100%;
   width:100%;
   position:fixed;
-  padding-left:3vw;
-  font-family: sans-serif;
-  padding:0 3vw;
+  padding:0 1vw;
+}
+#nav{
+  display:flex;
+  height:15%;
+  padding: 0 2vw;
+}
+#room{
+  flex-grow:2;
+  text-align: center;
+}
+#roomName{
+  margin:1em 0 0.3em 0;
+}
+#nextMeeting{
+  color: #004e74;
+  font-size: 0.8em;
+  margin: 0;
+}
+#camControls{
+  width:200px;
+  display:flex;
+  justify-content: space-around;
+}
+#nav img{
+  object-fit: contain;
 }
 #participants{
   position:absolute;
-  width:96vw;
-  bottom:10px;
-  padding-left:10px;
+  width:100%;
+  bottom:0px;
+  padding:1vh 2vw 1vh 0;
   text-align: center;
   display:flex;
+  flex-flow: row wrap;
+  align-items:flex-end;
+  background-color:#f2f2f2;
 }
 #participants p{
   margin:0;
+}
+#participants #title{
+  flex: 1 100%;
 }
 .participant{
   margin: 0 10px;
@@ -29,7 +61,7 @@
   position:relative;
 }
 .inUseDevice video{
-  position:absolute;
+/*  position:absolute;*/
   bottom:0;
   left:0;
 }

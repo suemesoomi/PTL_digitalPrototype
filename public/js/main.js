@@ -47,6 +47,7 @@ $("#timelineButton").click(function(){
 
 //at start: 
   addParticipants("\uD83E\uDD16"); //add AI
+nameRoom("PARSONS TELELCOMMUNICATION LAB MEETING");
 
 /*------------- USER WEBCAM ---------------*/  
 navigator.getUserMedia = navigator.getUserMedia ||

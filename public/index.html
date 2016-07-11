@@ -7,15 +7,25 @@
 <link rel="stylesheet" href="css/normalize.min.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/jquery-ui.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
 
 <div class="workspaceWindow ">
+  <div id="nav">
+    <img src="img/VonageWorkspaceLogo.png">
+    <div id="room">
+      <p id="roomName"></p>
+      <p id="nextMeeting">Next Sync: Wednesday July 20</p>
+    </div>
+    <div id="camControls">
+      <img src="img/microphone.png">
+      <img src="img/video.png">
+      <img src="img/settings.png">
+    </div>
+  </div>
   <div id="workRoom"></div>
-  
-  <h1 id="roomName"></h1>
-
   <div id="participants">
-    <h3 style="text-align:left; margin:0;">Participants:</h3>
+    <p id="title">PARTICIPANTS</p>
   </div>
 
   <button type="button" id="timelineButton"><p class="vertical-text"> Timeline</p></button>
