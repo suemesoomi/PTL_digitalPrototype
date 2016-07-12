@@ -1,48 +1,60 @@
+$(document).on('click', '.closeButton',function(){ 
+    $(this).parent().css("width","0");
+  });
 /*-------------WORKROOM---------------*/
-
 $("#timelineButton").click(function(){
-    openWindow($(".timelineWindow"));
-  });
+  var $overlay = $(this).parents().siblings(".overlay");
+  $overlay.toggleClass("open");   
+  if($overlay.hasClass("open")){
+    $("#timelineWindow").css("width","60vw");
+    $overlay.css("display","block");
+  }else{
+    $(this).parents().siblings(".overlay").click();
+  }
+}); 
+
+$("#binButton").click(function(){
+  var $overlay = $(this).parents().siblings(".overlay");
+  $overlay.toggleClass("open");   
+  if($overlay.hasClass("open")){
+    $("#binWindow").css("width","35vw");
+    $overlay.css("display","block");
+  }else{
+    $(this).parents().siblings(".overlay").click();
+  }
+});
+      
+$(".overlay").click(function(){ 
+  $(this).siblings().css("width","60px");
+  $(this).css("display","none");
+  $(this).removeClass("open");
+});
   
-  $("#binButton").click(function(){
-    openWindow($(".binWindow"));
-  });
-  $(document).on('click', '.closeButton',function(){ 
-    $(this).parent().css("width","0");
-  });
-  $(".overlay").click(function(){ 
-    $(this).parent().css("width","0");
-  });
-
-  function openWindow(window) {
-    window.css("width","100%");
-  }
+//ROOMNAME FROM TIMELINE
+function nameRoom(roomName){
+  $("#roomName").empty();
+  $("#roomName").append(roomName);
+}
   
-  //ROOMNAME FROM TIMELINE
-  function nameRoom(roomName){
-    $("#roomName").empty();
-    $("#roomName").append(roomName);
-  }
-  
-  //ADD CONTACTS IN TIMELINE = PARTICIPANTS IN WORKROOM
-  var colors = ["black","red","gold","limegreen","MediumBlue ","BlueViolet"];
-  function assignColor(){
-    return colors.splice(0,1)[0];
-  }
+//ADD CONTACTS IN TIMELINE = PARTICIPANTS IN WORKROOM
+var colors = ["black","red","gold","limegreen","MediumBlue ","BlueViolet"];
+function assignColor(){
+  return colors.splice(0,1)[0];
+}
 
-  function addParticipants(name) {
-	var participant = $('<div class="participant">');
-	var inUseDevice = $('<div class="inUseDevice">');
+function addParticipants(name) {
+  var participant = $('<div class="participant">');
+  var inUseDevice = $('<div class="inUseDevice">');
 
-	participant.css('color', assignColor());
+  participant.css('color', assignColor());
 
-	participant.append(inUseDevice);
-	participant.append($('<p>').text(name));
+  participant.append(inUseDevice);
+  participant.append($('<p>').text(name));
 
-	$('#participants').append(participant);
+  $('#participants').append(participant);
 
-	return inUseDevice;
-  }
+  return inUseDevice;
+}
   
 
 //at start: 

@@ -27,25 +27,18 @@
   <div id="participants">
     <p id="title">PARTICIPANTS</p>
   </div>
-
-  <button type="button" id="timelineButton"><p class="vertical-text"> Timeline</p></button>
-
-  <button type="button" id="binButton"><p class="vertical-text">Bin</p></button>
 </div>
 
-<div class="timelineWindow slideWindow">
-  <div class="overlay" style="width:40vw; height:100%;"></div>
-  <div id="timeline"> 
+<div class="slideWindow">
+  <div class="overlay"></div>
+  <div id="timelineWindow">
+    <div id="timeline"> 
     <div id="app">
 		<div id="container">
-            <div class="title"> </div>
+            <p class="slideTitle">TIMELINE</p>
 			<div class="chat-log">
-				<div class="server-msg" id="server-message">
-					TIMELINE
-				</div>
-
+				
 				<div id="chat-container">
-					<!-- Hey hey -->
 				</div>
 			</div>
 
@@ -59,12 +52,11 @@
 				<div class="right">
 					<button id="js-btn-send">SEND</button>
 				</div>
+
 				<!-- return to normal flow -->
 				<div class="clearfix">
 				</div>
-
 			</div>
-
 		</div>
         <div id="contactsPopup">
           <div class="server-msg" id="server-message">CONTACTS</div>
@@ -97,29 +89,26 @@
           <button type="button" class="closeButton">Done</button>
         </div>
 	</div>
-
+  </div>
+    <div id="timelineButton"></div>
+  </div>
   
-  </div>
-  <button type="button" class="closeButton">Close</button>
 </div>
 
-<div class="binWindow slideWindow">
-  <div id="bin">
-    <button class="binInput" id="photoInputButton">Add Photo</button>
-<!--    <div class="binInput" id="phostoInputButton">-->
+
+<div class="slideWindow">
+  <div class="overlay"></div>
+  <div id="binWindow">
+    <div id="bin">
+      <p class="slideTitle">TOOL BIN</p>
+      <button class="binInput" id="photoInputButton">Add Photo</button>
       <input id="photoInput" type="file" accept="image/*">
-      
-<!--    </div>-->
-<!--    <div class="binInput" id="urlInputButton">-->
-    <button class="binInput" id="urlInputButton">Add URL</button>
-<!--      <input id="urlInput" type="text">-->
-     
-<!--    </div>-->
+      <button class="binInput" id="urlInputButton">Add URL</button>
+    </div>
+    <div id="binButton"></div>
   </div>
-  <div class="overlay" style="width:40vw; height:100%;"></div>
-  <button type="button" class="closeButton">Close</button>
+  
 </div>
-
 <!-- Underscore template -->
 <script id="tpl-chat-item" type="text/html">
 		<div class="chat-item">

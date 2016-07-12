@@ -12,6 +12,7 @@ body{
   display:flex;
   height:15%;
   padding: 0 2vw;
+  border-bottom:1px solid;
 }
 #room{
   flex-grow:2;
@@ -36,6 +37,7 @@ body{
 #participants{
   position:absolute;
   width:100%;
+  height:20%;
   bottom:0px;
   padding:1vh 2vw 1vh 0;
   text-align: center;
@@ -43,6 +45,7 @@ body{
   flex-flow: row wrap;
   align-items:flex-end;
   background-color:#f2f2f2;
+  border-top:1px solid;
 }
 #participants p{
   margin:0;
@@ -65,50 +68,18 @@ body{
   bottom:0;
   left:0;
 }
-#timelineButton{
-  position: absolute;
-  top:0;
-  right:0;
-  width:2vw;
-  height:100vh;
-}
-.vertical-text{
-  transform: rotate(90deg);
-}
-#binButton{
-  position: absolute;
-  top:0;
-  left:0;
-  width:2vw;
-  height:100vh;
-}
-.slideWindow{
-  height: 100%; 
-  width: 0; 
-  position: fixed;
-  z-index: 1;
-  overflow-x: hidden;
-  transition: 0.5s; 
-  display:flex;
-}
-.timelineWindow{
-  right:0;
-}
-.binWindow{
-  left:0;
-}
-.overlay{
-  background-color: rgba(255,255,255,0.6);
-}
-#timeline, #bin{
-  width:60vw;
-  height:100%;
-  background-color: aquamarine;
-}
+
 .closeButton{
   top:2vh;
   right:2vw;
   position:absolute;
+}
+#workRoom{
+  width:100%;
+  height:65%;
+  position:relative;
+  background:linear-gradient(white, #e6e7e8);
+  overflow: hidden;
 }
 .photo{
   width:300px;
@@ -132,20 +103,100 @@ body{
   top:0;
   display:none;
 }
-/*-------------------BIN----------------------*/
 
-#bin{
-  display:flex;
+.slideWindow{
+  height: 100%; 
+  width:100%;
+  position: fixed;
+  z-index: 1;
+  overflow-x: hidden;
+  pointer-events:none;
 }
+.overlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:none;
+  background-color: rgba(51,51,51,0.6);
+  pointer-events:all;
+}
+.slideTitle{
+  height:8vh;
+  border-bottom:1px solid black;
+  text-align: center;
+}
+#binWindow, #timelineWindow{
+  height:100%;
+  width:60px;
+  position:relative;
+  transition: 0.5s;
+  pointer-events:all;
+}
+#bin, #timeline{
+  position:absolute;
+  height:100%;
+  width:calc(100% - 50px);
+  background-color: white;
+}
+#binButton, #timelineButton{
+  position:absolute;
+  width:50px;
+  height:50px;
+  top:50%;
+  transform: translateY(-50%);
+  background-size:contain;
+  cursor:pointer;
+}
+/*-------------------BIN----------------------*/
+#binWindow{
+  left:0;
+}
+#bin{ 
+  padding:0 20px;
+  border-right: 10px solid #008adc;
+  right:50px;
+  display:flex;
+  flex-flow: wrap;
+  justify-content: space-around;
+  overflow:hidden;  
+}
+#bin .slideTitle{
+  flex: 1 100%;
+  color:#008adc;
+}
+#binButton{
+  right:0;
+  background-color:#008adc;
+  border-radius:0 10px 10px 0;
+  background-image: url('../img/toolbinLogo.png');
+}
+
 .binInput{
-  width:10vw;
-  height:10vw;
-  margin:2vw;
+  width:50px;
+  height:50px;
 }
 #photoInput{
   display:none;
 }
 /*-----------------TIMELINE-----------------*/
+#timelineWindow{
+  float:right;
+}
+#timeline{
+  left:50px;
+  border-left: 10px solid #f5750c;
+}
+#timeline .slideTitle{
+  color:#f5750c;
+}
+#timelineButton{
+  left:0;
+  background-color:#f5750c;
+  border-radius:10px 0 0 10px;
+  background-image: url('../img/timelineLogo.png');
+}
 
 * {
 	box-sizing: border-box;
@@ -157,9 +208,8 @@ body{
 #container {
   position: relative;
   height:100%;
-  background: rgb(255,255,255);
-  box-shadow: 0px 3px 15px rgba(0,0,0,0.15);
   overflow:hidden;
+  padding:0 20px;
 }
 
 .title {
@@ -229,6 +279,7 @@ body{
 
 #chat-input {
   position: absolute;
+  left:0px;
   bottom: 0px;
   width: 100%;
   background: #dfdfdf;
