@@ -299,6 +299,13 @@ io.on('connection', function(socket) {
             // }
         }, 2000);
     }
+    
+     socket.on('image', function(res) {
+       io.sockets.emit('openImg', res);
+     });
+    socket.on('url', function(res) {
+       io.sockets.emit('openUrl', res);
+     });
 
 });
 
