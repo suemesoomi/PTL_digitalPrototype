@@ -6,7 +6,7 @@
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 <link rel="stylesheet" href="css/normalize.min.css">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/jquery-ui.css">
+<!--<link rel="stylesheet" href="css/jquery-ui.css">-->
 <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
 
@@ -15,7 +15,7 @@
     <img src="img/VonageWorkspaceLogo.png">
     <div id="room">
       <p id="roomName"></p>
-      <p id="nextMeeting">Next Sync: Wednesday July 20</p>
+      <p id="nextMeeting">Next Sync: </p>
     </div>
     <div id="camControls">
       <img src="img/microphone.png">
@@ -116,48 +116,47 @@
   
 </div>
 <!-- Underscore template -->
-<script id="tpl-chat-item" type="text/html">
+	<script id="tpl-chat-item" type="text/html">
 		<div class="chat-item">
 			<div class="left">
 				<div class="timestamp">
-					<%= timestamp %>
+					<%- timestamp %>
 				</div>
 				<div class="user">
-					<%= name %>
+					<%- data.name %>
 				</div>
 			</div>
 			<div class="right">
-				<%= msg %>
+				<%- data.msg %>
 			</div>
 			<!-- return to normal flow -->
 			<div class="clearfix">
 			</div>
 		</div>
-</script>
-
-<script id="tpl-bot-item" type="text/html">
-    <div class="bot-item">
-        <div class="left">
-            <div class="timestamp">
-                <%= timestamp %>
-            </div>
-            <div class="user">
-                <%= name %>
-            </div>
-        </div>
-        <div class="right">
-            <%= msg %>
-        </div>
-        <!-- return to normal flow -->
-        <div class="clearfix">
+	</script>
+      <script id="tpl-bot-item" type="text/html">
+      <div class="bot-item">
+          <div class="left">
+              <div class="timestamp">
+                  <%= timestamp %>
+              </div>
+              <div class="user">
+                  <%= name %>
+              </div>
+          </div>
+          <div class="right">
+              <%= msg %>
+          </div>
+          <!-- return to normal flow -->
+          <div class="clearfix">
         </div>
     </div>
 </script>
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<!--<script type="text/javascript" src="js/jquery-ui.min.js"></script>-->
 <script type="text/javascript" src="js/underscore.min.js"></script>
 <!--<script type="text/javascript" src="js/SimpleWebRTClatest-v2.js"></script>-->
-<script type="text/javascript" src="js/draw.js"></script>
+<!--<script type="text/javascript" src="js/draw.js"></script>-->
 <script type="text/javascript" src="js/main.js"></script>
 
