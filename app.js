@@ -6,6 +6,7 @@ var credentials = {key: privateKey, cert: certificate};
 
 
 var express = require('express');
+var multer = require('multer');
 var app = express();
 //var server = require('http').Server(app);
 var httpsServer = https.createServer(credentials, app);
@@ -310,8 +311,16 @@ io.on('connection', function(socket) {
 });
 
 /*----------- LISTEN FOR MOBILE -------------*/
-app.get('/Upload-photo', (req, res) => {
-    res.send("hello");
+app.post('/Upload-photo',multer().single("photo"),(req, res) => {
+//  console.log(req.file);
+  var source = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+    
+  io.sockets.emit('openImg', {
+                   name: req.body.name,
+                   source: source
+  });
+  
+  res.send("hello");
 });
 
 ///*----------- WEBRTC-------------*/

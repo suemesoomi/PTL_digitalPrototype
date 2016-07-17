@@ -62,10 +62,14 @@ function addParticipants(name) {
 nameRoom("PARSONS TELELCOMMUNICATION LAB MEETING");
 
 /*------------- USER WEBCAM ---------------*/  
+
 navigator.getUserMedia = navigator.getUserMedia ||
                          navigator.webkitGetUserMedia ||
                          navigator.mozGetUserMedia;
 function webCam(inUseDevice) {
+  if(!navigator.getUserMedia){
+    return;
+  }
   var w = inUseDevice.width();
   navigator.getUserMedia(
     { video: true },
@@ -292,7 +296,7 @@ app.init = function() {
 
         //open links from timeline
         $('#chat-container').on('click', 'img', function(){
-          var source = this.src;
+          var a = this.src;
           addPhoto(source);
         });
         
@@ -317,9 +321,12 @@ app.init = function() {
       $photoInput.click();
     });
 
-    $photoInput.change(function(event){  
-      var source = URL.createObjectURL(this.files[0]); 
-      addPhoto(source);
+    $photoInput.change(function(event){ 
+      var reader = new FileReader();
+      
+      reader.addEventListener("load", function(){
+        var source = reader.result;
+        addPhoto(source);
       //send to timeline by tricking js into text input
       $('#js-ipt-text').val("<img src="+source+">");
       $('#js-btn-send').click();
@@ -328,6 +335,11 @@ app.init = function() {
                    name: name,
                    source: source
        });
+        
+      })
+      
+      reader.readAsDataURL(this.files[0]);
+      
     });
     $('#workRoom').on('click', 'button.annotateSend', function(){
       $(this).siblings(".annotateButton").click();

@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.10.1",
+    "multer": "^1.1.0",
     "signal-master": "^1.0.1",
     "socket.io": "^1.2.0"
   }
