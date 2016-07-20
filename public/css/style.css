@@ -371,3 +371,27 @@ body{
   width:50%;
   height:auto;
 }
+
+/*  MOBILE WEBAPP*/
+@media only screen and (max-device-width: 480px) {
+  #mobileCheck { 
+    display: none; 
+  }
+  .photo{
+    width:150px;
+  }
+  .container{
+    top:10px;
+    left:50px;
+  }
+  #roomName{
+    font-size: 0.6em;
+  }
+  #nextMeeting{
+    font-size:0.5em;
+  }
+  #camControls{
+    width:120px;
+  }
+
+}

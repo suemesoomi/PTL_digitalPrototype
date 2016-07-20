@@ -1,3 +1,13 @@
+/*----------------- MOBILE --------------------*/
+var is_mobile = false;
+
+$( document ).ready(function() {         
+    if( $('#mobileCheck').css('display')=='none') {
+        is_mobile = true;       
+    }
+ });
+
+
 $(document).on('click', '.closeButton',function(){ 
     $(this).parent().css("width","0");
   });
@@ -6,8 +16,14 @@ $("#timelineButton").click(function(){
   var $overlay = $(this).parents().siblings(".overlay");
   $overlay.toggleClass("open");   
   if($overlay.hasClass("open")){
-    $("#timelineWindow").css("width","60vw");
-    $overlay.css("display","block");
+    if(is_mobile){
+      $("#timelineWindow").css("width","110vw");
+      $("#binWindow").css("display","none");
+      $overlay.css("display","block");
+    } else{
+      $("#timelineWindow").css("width","60vw");
+      $overlay.css("display","block");
+    }
   }else{
     $(this).parents().siblings(".overlay").click();
   }
@@ -17,8 +33,14 @@ $("#binButton").click(function(){
   var $overlay = $(this).parents().siblings(".overlay");
   $overlay.toggleClass("open");   
   if($overlay.hasClass("open")){
-    $("#binWindow").css("width","35vw");
-    $overlay.css("display","block");
+    if(is_mobile){
+      $("#binWindow").css("width","110vw");
+      $("#timelineWindow").css("display","none");
+      $overlay.css("display","block");
+    } else{
+      $("#binWindow").css("width","35vw");
+      $overlay.css("display","block");
+    }
   }else{
     $(this).parents().siblings(".overlay").click();
   }
@@ -27,6 +49,8 @@ $("#binButton").click(function(){
 $(".overlay").click(function(){ 
   $(this).siblings().css("width","60px");
   $(this).css("display","none");
+  $("#timelineWindow").css("display","block");
+  $("#binWindow").css("display","block");
   $(this).removeClass("open");
 });
   
@@ -215,7 +239,7 @@ app.init = function() {
             var tplToCompile = $('#tpl-chat-item').html();
             var compiled = _.template(tplToCompile)(res);
             $('#chat-container').prepend(compiled);
-            console.log(res.data);
+//            console.log(res.data);
          /*----------------KEEP TRACK OF STATES----------------*/
     //        console.log("state#: "+res.data.state);
     //          if(res.data.state==1){
@@ -235,7 +259,7 @@ app.init = function() {
             });
 
                 $('#chat-container').prepend(compiled);
-            console.log(res.data);
+//            console.log(res.data);
         });
 
         var passtoAI = function(contacts){
@@ -296,7 +320,7 @@ app.init = function() {
 
         //open links from timeline
         $('#chat-container').on('click', 'img', function(){
-          var a = this.src;
+          var source = this.src;
           addPhoto(source);
         });
         
@@ -339,7 +363,7 @@ app.init = function() {
       })
       
       reader.readAsDataURL(this.files[0]);
-      
+      $photoInput.empty();
     });
     $('#workRoom').on('click', 'button.annotateSend', function(){
       $(this).siblings(".annotateButton").click();
@@ -475,3 +499,4 @@ function addURL(source){
     }
   });
 }
+
